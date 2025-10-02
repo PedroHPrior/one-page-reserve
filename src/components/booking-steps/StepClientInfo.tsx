@@ -40,28 +40,37 @@ export const StepClientInfo = ({ onNext, onBack }: StepClientInfoProps) => {
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
-      className="space-y-6"
+      className="space-y-6 md:space-y-8"
     >
       <Button
         variant="ghost"
         onClick={onBack}
-        className="mb-4"
+        className="mb-2 hover:bg-muted/50 -ml-2"
         type="button"
       >
         <ArrowLeft className="w-4 h-4 mr-2" />
-        Voltar
+        <span className="font-medium">Voltar</span>
       </Button>
 
+      <div className="mb-6 md:mb-8">
+        <h3 className="text-xl md:text-2xl font-bold mb-2">Suas informações</h3>
+        <p className="text-sm md:text-base text-muted-foreground">Preencha seus dados para confirmar o agendamento</p>
+      </div>
+
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 md:space-y-6">
           <FormField
             control={form.control}
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nome Completo *</FormLabel>
+                <FormLabel className="text-base font-semibold">Nome Completo *</FormLabel>
                 <FormControl>
-                  <Input placeholder="Seu nome" {...field} />
+                  <Input 
+                    placeholder="Seu nome completo" 
+                    className="h-12 md:h-14 rounded-xl border-2 focus:border-primary transition-smooth text-base"
+                    {...field} 
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -73,9 +82,14 @@ export const StepClientInfo = ({ onNext, onBack }: StepClientInfoProps) => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email *</FormLabel>
+                <FormLabel className="text-base font-semibold">Email *</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="seu@email.com" {...field} />
+                  <Input 
+                    type="email" 
+                    placeholder="seu@email.com" 
+                    className="h-12 md:h-14 rounded-xl border-2 focus:border-primary transition-smooth text-base"
+                    {...field} 
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -87,9 +101,14 @@ export const StepClientInfo = ({ onNext, onBack }: StepClientInfoProps) => {
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Telefone (opcional)</FormLabel>
+                <FormLabel className="text-base font-semibold">Telefone <span className="text-muted-foreground font-normal">(opcional)</span></FormLabel>
                 <FormControl>
-                  <Input type="tel" placeholder="(00) 00000-0000" {...field} />
+                  <Input 
+                    type="tel" 
+                    placeholder="(00) 00000-0000" 
+                    className="h-12 md:h-14 rounded-xl border-2 focus:border-primary transition-smooth text-base"
+                    {...field} 
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -101,11 +120,11 @@ export const StepClientInfo = ({ onNext, onBack }: StepClientInfoProps) => {
             name="notes"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Observações (opcional)</FormLabel>
+                <FormLabel className="text-base font-semibold">Observações <span className="text-muted-foreground font-normal">(opcional)</span></FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="Alguma informação adicional que gostaria de compartilhar?"
-                    className="min-h-[100px]"
+                    className="min-h-[120px] md:min-h-[140px] rounded-xl border-2 focus:border-primary transition-smooth resize-none text-base"
                     {...field}
                   />
                 </FormControl>
@@ -114,13 +133,16 @@ export const StepClientInfo = ({ onNext, onBack }: StepClientInfoProps) => {
             )}
           />
 
-          <Button
-            type="submit"
-            className="w-full gradient-primary shadow-glow"
-            size="lg"
-          >
-            Revisar Agendamento
-          </Button>
+          <div className="pt-2">
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <Button
+                type="submit"
+                className="w-full gradient-primary shadow-glow text-base md:text-lg h-14 md:h-16 rounded-xl font-semibold"
+              >
+                Revisar Agendamento →
+              </Button>
+            </motion.div>
+          </div>
         </form>
       </Form>
     </motion.div>

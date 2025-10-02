@@ -78,7 +78,7 @@ export const InlineBookingModal = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={handleClose}
-              className="fixed inset-0 bg-black/50 z-50"
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
             />
             
             {/* Bottom Sheet */}
@@ -87,23 +87,37 @@ export const InlineBookingModal = () => {
               animate={{ y: 0 }}
               exit={{ y: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="fixed bottom-0 left-0 right-0 z-50 bg-background rounded-t-3xl shadow-elegant max-h-[90vh] overflow-hidden"
+              className="fixed bottom-0 left-0 right-0 z-50 bg-background rounded-t-[2rem] shadow-elegant max-h-[92vh] overflow-hidden"
             >
+              {/* Gradient Header */}
+              <div className="gradient-primary h-2 w-full" />
+              
               {/* Grip */}
-              <div className="flex justify-center pt-3 pb-2">
-                <div className="w-12 h-1.5 bg-muted rounded-full" />
+              <div className="flex justify-center pt-4 pb-3">
+                <motion.div 
+                  className="w-12 h-1.5 bg-muted rounded-full"
+                  whileTap={{ scale: 0.95 }}
+                />
               </div>
               
               {/* Progress */}
-              <div className="px-6 pb-4">
-                <Progress value={progress} className="h-2" />
-                <p className="text-sm text-muted-foreground mt-2 text-center">
-                  Passo {currentStep} de {totalSteps}
-                </p>
+              <div className="px-6 pb-5">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-sm font-semibold">
+                    {currentStep === 1 && 'Serviço'}
+                    {currentStep === 2 && 'Data & Hora'}
+                    {currentStep === 3 && 'Informações'}
+                    {currentStep === 4 && 'Confirmação'}
+                  </span>
+                  <span className="text-sm text-muted-foreground font-medium">
+                    {currentStep}/{totalSteps}
+                  </span>
+                </div>
+                <Progress value={progress} className="h-2.5 shadow-sm" />
               </div>
               
               {/* Content */}
-              <div className="overflow-y-auto max-h-[calc(90vh-120px)] px-6 pb-6">
+              <div className="overflow-y-auto max-h-[calc(92vh-140px)] px-6 pb-8 scrollbar-thin">
                 {renderStep()}
               </div>
             </motion.div>
@@ -115,29 +129,42 @@ export const InlineBookingModal = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={setModalOpen}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-hidden p-0">
+      <DialogContent className="max-w-3xl max-h-[92vh] overflow-hidden p-0 gap-0">
+        {/* Gradient Header Accent */}
+        <div className="gradient-primary h-1.5 w-full" />
+        
         {/* Header */}
-        <DialogHeader className="p-6 pb-4 border-b">
-          <div className="flex items-center justify-between">
-            <DialogTitle className="text-2xl">
-              {currentStep === 1 && 'Confirmar Serviço'}
-              {currentStep === 2 && 'Escolher Data e Horário'}
-              {currentStep === 3 && 'Suas Informações'}
-              {currentStep === 4 && 'Confirmação'}
-            </DialogTitle>
-          </div>
-          
-          {/* Progress */}
-          <div className="mt-4">
-            <Progress value={progress} className="h-2" />
-            <p className="text-sm text-muted-foreground mt-2">
-              Passo {currentStep} de {totalSteps}
-            </p>
+        <DialogHeader className="px-8 pt-8 pb-6">
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <DialogTitle className="text-3xl font-bold">
+                {currentStep === 1 && 'Confirmar Serviço'}
+                {currentStep === 2 && 'Escolher Data e Horário'}
+                {currentStep === 3 && 'Suas Informações'}
+                {currentStep === 4 && 'Confirmação'}
+              </DialogTitle>
+              <div className="flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full">
+                <span className="text-sm font-semibold text-primary">
+                  {currentStep}/{totalSteps}
+                </span>
+              </div>
+            </div>
+            
+            {/* Progress */}
+            <div>
+              <Progress value={progress} className="h-2.5 shadow-sm" />
+              <div className="flex justify-between mt-3 text-xs font-medium text-muted-foreground">
+                <span className={currentStep >= 1 ? 'text-primary' : ''}>Serviço</span>
+                <span className={currentStep >= 2 ? 'text-primary' : ''}>Data & Hora</span>
+                <span className={currentStep >= 3 ? 'text-primary' : ''}>Informações</span>
+                <span className={currentStep >= 4 ? 'text-primary' : ''}>Confirmação</span>
+              </div>
+            </div>
           </div>
         </DialogHeader>
         
         {/* Content */}
-        <div className="overflow-y-auto max-h-[calc(90vh-180px)] p-6">
+        <div className="overflow-y-auto max-h-[calc(92vh-220px)] px-8 pb-8 scrollbar-thin">
           {renderStep()}
         </div>
       </DialogContent>
